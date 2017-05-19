@@ -1,11 +1,3 @@
-/*
- * Instituto Tecnológico de León - POO
- * 09 Mayo 2017
- * Cuenta.java
- * Clase Cuenta
- * Ramírez Sánchez Jéssica
- * 
- */
 
 package U.ProyectoBanco.Model;
 
