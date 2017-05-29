@@ -1,5 +1,5 @@
 
-package U.ProyectoBanco.Model;
+package proyecto.banco.Model;
 
 public class Movimientos extends Exception{
     private int cantidad;

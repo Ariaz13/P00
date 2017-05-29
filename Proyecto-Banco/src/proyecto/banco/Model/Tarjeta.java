@@ -1,13 +1,12 @@
 
-package U.ProyectoBanco.Model;
+package proyecto.banco.Model;
 
 import java.awt.Image;
+import javax.swing.JTextField;
 
 public abstract class Tarjeta {
     
     private long noCuenta;
-    private String fechaApertura;
-    private String fechaVencimiento;
     Image foto;
     private float saldo;
 
@@ -19,22 +18,7 @@ public abstract class Tarjeta {
         return noCuenta;
     }
 
-    public void setFechaApertura(String fechaApertura) {
-        this.fechaApertura = fechaApertura;
-    }
-
-    public String getFechaApertura() {
-        return fechaApertura;
-    }
-
-    public void setFechaVencimiento(String fechaVencimiento) {
-        this.fechaVencimiento = fechaVencimiento;
-    }
-
-    public String getFechaVencimiento() {
-        return fechaVencimiento;
-    }
-
+   
     public void setFoto(Image foto) {
         this.foto = foto;
     }
@@ -50,25 +34,22 @@ public abstract class Tarjeta {
     public float getSaldo() {
         return saldo;
     }
-
+    
     public Tarjeta(){
         
     }
     
-    public Tarjeta(long noCuenta, String fechaApertura, String fechaVencimiento, Image foto, float saldo) {
+    public Tarjeta(long noCuenta, Image foto, float saldo) {
         this.noCuenta = noCuenta;
-        this.fechaApertura = fechaApertura;
-        this.fechaVencimiento = fechaVencimiento;
         this.foto = foto;
         this.saldo = saldo;
     }
     
-    abstract void consultar();
+    abstract Cuenta consultar(JTextField nCuenta);
     
-    abstract void depositar();
+    abstract void depositar(double cantidad, JTextField nCuenta);
     
-    abstract void retirar();
+    abstract void retirar(double cantidad, JTextField nCuenta);
     
-    abstract void transferir();
     
 }

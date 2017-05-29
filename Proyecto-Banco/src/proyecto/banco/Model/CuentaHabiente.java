@@ -1,8 +1,19 @@
 
-package U.ProyectoBanco.Model;
+package proyecto.banco.Model;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 public class CuentaHabiente extends Cuenta{
-    public CuentaHabiente(String n, long nC, String t){
-//        super(String nombre; long noCuenta; String tipo);
+     
+    Conection conec = new Conection();
+
+    public CuentaHabiente(int numero, float saldo, String imagen, String tipoTarjeta) {
+        super(numero, saldo, imagen, tipoTarjeta);
     }
+    
+    
+    
+    
 }

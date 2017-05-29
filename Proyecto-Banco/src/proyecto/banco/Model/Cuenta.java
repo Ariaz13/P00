@@ -1,74 +1,80 @@
 
-package U.ProyectoBanco.Model;
+package proyecto.banco.Model;
 
 public class Cuenta {
 
-    private String nombre;
-    private long noCuenta;
-    private String fechaApertura;
-    private String fechaVencimiento;
+    private int numero;
     private float saldo;
-    private String tipo;
-
-    public void setNombre(String nombre){
-        this.nombre = nombre;
-    }
-    public String getNombre(){
-        return nombre;
-    }
+    private String imagen;
+    private String tipoTarjeta;
     
-    public void setNoCuenta(long noCuenta){
-        this.noCuenta = noCuenta;
-        // contar número de dígitos introducidos
-    }
-    public long getNoCuenta(){
-        return noCuenta;
-    }
-    
-    public void setFechaApertura(String fechaApertura){
-        this.fechaApertura = fechaApertura;
-    }
-    public String getFechaApertura(){
-        return fechaApertura;
-    }
-    
-    public void setFechaVencimiento(String fechaVencimiento){
-        this.fechaVencimiento = fechaVencimiento;
-    }
-    public String getFechaVencimiento(){
-        return fechaVencimiento;
-    }
-    
-    public void setSaldo(float dinero){
-        
+    public Cuenta(int numero, float saldo, String imagen, String tipoTarjeta){
+        this.numero = numero;
         this.saldo = saldo;
+        this.imagen = imagen;
+        this.tipoTarjeta = tipoTarjeta;
     }
+    
+    public Cuenta(float saldo, String imagen){        
+        this.saldo = saldo;
+        this.imagen = imagen;
+    }
+
+    public Cuenta() {
+    }
+    
+    public void setNumero(int numero){
+        this.numero = numero;
+    }
+    
+    public int getNumero(){
+        return this.numero;
+    }
+    
+	/*  El método setSaldo aplica para cuentas de débito, en las
+		que el saldo no puede ser menor a cero, habrá de ajustarse
+		sobre todo para cuentas derivadas de crédito y de débito.
+
+		El interés por ahora es colocar excepciones definidas por 
+		el usuario
+	*/
+		
+    public void setSaldo(int cantidad) 
+            throws MontoIncorrecto{
+        if(cantidad >= 0)
+            saldo = cantidad;
+        else
+            throw new MontoIncorrecto("Cantidad incorrecta\n" +
+                                      "la cuenta es de débito");
+    }
+    
     public float getSaldo(){
         return saldo;
     }
     
-    public void setTipo(String tipo){
-        if(saldo < 0){ // solo funciona si hay saldo deudor
-            tipo = "Tarjeta de Crédito";
-        } else{
-            tipo = "Tarjeta de Débito";
-        }
-    }
-    public String getTipo(){
-        return tipo;
+    public void setImagen(String imagen){
+        this.imagen = imagen;
     }
     
-    public void depósito(){
-        // 1.Cheque 2.Efectivo 3.Transferencia bancaria
+    public String getImagen(){
+        return this.imagen;
     }
     
-    public void retiro(){
-        // en TDD no aplica comisión
-        
+    public void depósito(float cantidad) throws MontoIncorrecto{
+        if(cantidad >= 0)
+            saldo += cantidad;
+        else
+            throw new MontoIncorrecto("Cantidad incorrecta\n" + 
+                                      "Se intentó depositar $" + cantidad +
+									  "\nNo se reciben depósitos negativos");
     }
     
-    public void consulta(){
-        // si es TDC genera comisión
-        
-    }
+    public float retiro(float cantidad) throws SaldoInsuficiente{
+        if(saldo < cantidad)
+            throw new SaldoInsuficiente("Fondos insuficientes");
+        else{
+            saldo -= cantidad;
+            return cantidad;
+        }            
+    }    
 }

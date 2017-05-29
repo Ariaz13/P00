@@ -1,14 +1,14 @@
 
-package U.ProyectoBanco.Test;
+package proyecto.banco.Test;
 
-import U.ProyectoBanco.View.Display;
+import View.Display;
 
 public class TestDisplay {
 
     public static void main(String[] args) {
         Display run = new Display();
         
-//        run.show();
+        run.show();
     }
     
 }
