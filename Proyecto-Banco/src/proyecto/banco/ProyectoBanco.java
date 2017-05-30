@@ -95,7 +95,7 @@ Cuenta cta = new Cuenta();
                         System.out.println("Ingrese la cantidad");
                         double cantd = new java.util.Scanner(System.in).nextInt();
                         if (cantd >= 0){
-                        tc.depositar(cantd, cuenta);}
+                        tc.depositar(jcantd, cuenta);}
                         cta.depósito(cantd);
                     } catch (OperaciónErronea ex) {
                         Logger.getLogger(ProyectoBanco.class.getName()).log(Level.SEVERE, null, ex);
@@ -106,7 +106,7 @@ Cuenta cta = new Cuenta();
                         System.out.println("Regrese pronto.");
                     break;
                     default: System.out.println("\"Operacion Erronea\"");
-                }
+                } while(m = 4);
     }
     
     void procesoTDD(){
