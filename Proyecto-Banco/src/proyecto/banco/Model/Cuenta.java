@@ -8,7 +8,7 @@ public class Cuenta {
     private String imagen;  
     private String tipoTarjeta; //Si es de Crédito o Debito
     
-    public Cuenta(String numero, double saldo, String imagen, String tipoTarjeta){
+    public Cuenta(double saldo, String imagen, String tipoTarjeta, String numero){
         this.numero = numero;
         this.saldo = saldo;
         this.imagen = imagen;

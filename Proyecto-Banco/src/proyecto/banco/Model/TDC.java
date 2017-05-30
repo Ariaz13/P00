@@ -8,26 +8,34 @@ import java.util.Calendar;
 
 public class TDC implements Tarjeta{
     
-    Conection conec = new Conection();
+    public Conection cc = new Conection();
     Cuenta cta = new Cuenta();
+     
+    String tar = "Crédito";
     
-    String nCuenta = cta.getNumero();
-    double saldo = cta.getSaldo();
-    String tarjeta = cta.getTipoTarjeta();
-    
-
-
     @Override
-    public Cuenta consultar() {
+    public boolean verificarTarjeta (String nCuenta){
         try{
-            Statement s = conec.c.createStatement();            
-            ResultSet rs = s.executeQuery("Select * From Cuenta "+
-                                          "Where NoCuenta = '" + nCuenta + "'");            
+            Statement s = cc.c.createStatement();
+            ResultSet rs = s.executeQuery("Select * From Cuenta "+"Where TipoTarjeta = '" + tar +"' and NoCuenta = '" + nCuenta + "'");
             if(rs.next())
-                return new Cuenta(rs.getString("NoCuenta"),
-                                  rs.getFloat("Saldo"), 
-                                  rs.getString("TipoTarjeta"), 
-                                  rs.getString("Imagen"));
+                return true;
+            else
+                System.err.println("Revise sus datos de registro");
+        }catch(SQLException e){
+            System.err.println("Problemas con la ejecución de su sentencia " + e.getMessage());
+        }        
+        return false;        
+    }
+
+    
+    @Override
+    public Cuenta consultar(String nCuenta) {
+        try{
+            Statement s = cc.c.createStatement();            
+            ResultSet rs = s.executeQuery("Select * From Cuenta "+ " Where NoCuenta = '" + nCuenta + "'");            
+            if(rs.next())
+                return new Cuenta(rs.getFloat("Saldo"), rs.getString("TipoTarjeta"), rs.getString("Imagen"), rs.getString("NoCuenta"));
         }catch(SQLException e){
             System.err.println("Problemas con la consulta " + e.getMessage());
         }
@@ -36,10 +44,10 @@ public class TDC implements Tarjeta{
     }
 
     @Override
-    public void depositar(double cantidad) {
+    public void depositar(double cantidad, String nCuenta) {
         if (cantidad >= 0 ){
             try{
-            Statement s = conec.c.createStatement();
+            Statement s = cc.c.createStatement();
             s.executeUpdate("Update Cuenta Set Saldo = Saldo + "+ cantidad +
                             " Where Numero= '"+ nCuenta + "'");
             Calendar calendario = Calendar.getInstance();
@@ -57,9 +65,9 @@ public class TDC implements Tarjeta{
     }
 
     @Override
-    public void retirar(double cantidad) {
+    public void retirar(double cantidad, String nCuenta) {
         try{
-            Statement s = conec.c.createStatement();
+            Statement s = cc.c.createStatement();
             s.executeUpdate("Update Cuenta Set Saldo = Saldo - "+ cantidad +
                             " Where Numero= '"+ nCuenta + "'");            
             Calendar calendario = Calendar.getInstance();

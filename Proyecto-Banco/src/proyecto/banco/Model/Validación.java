@@ -4,7 +4,6 @@ package proyecto.banco.Model;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import javax.swing.JTextField;
 
 public class Validación {
     public Conection cc = new Conection();

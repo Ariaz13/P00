@@ -6,20 +6,27 @@ public class TestTDD {
 
     public static void main(String[] args) {
         TDD td = new TDD();
-        
+                        
         System.out.println("Elegir que hacer: 1.-Consultar 2.-Retirar 3.-Depositar");
         
         int r = new java.util.Scanner(System.in).nextInt();
         
         switch (r){
             case 1: 
-                td.consultar();
+                td.cc.conectar();
+                td.verificarTarjeta("1234567890123456");
+                td.consultar("1234567890123456");
+    
             break;
             case 2:
-                td.retirar(300);
+                td.cc.conectar();
+                td.retirar(-300,"1234567890123456");
+                td.cc.desconectar();
             break;
             case 3:
-                td.depositar(400);
+                td.cc.conectar();
+                td.depositar(400, "1234567890123456");
+                td.cc.desconectar();
             break;
         }
         

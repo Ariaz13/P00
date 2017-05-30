@@ -8,24 +8,33 @@ import java.util.Calendar;
 
 public class TDD implements Tarjeta{
     
-    Conection conec = new Conection();
-    Cuenta cta = new Cuenta();
-    
-    String nCuenta = cta.getNumero();
+    public Conection cc = new Conection();
+    public Cuenta cta = new Cuenta();
     double saldo = cta.getSaldo();
-    String tarjeta = cta.getTipoTarjeta();
-
+    String tar = "Débito";
     
-    public Cuenta consultar() {
+    @Override
+    public boolean verificarTarjeta (String nCuenta){
         try{
-            Statement s = conec.c.createStatement();            
-            ResultSet rs = s.executeQuery("Select * From Cuenta "+
-                                          "Where NoCuenta = '" + nCuenta + "'");            
+            Statement s = cc.c.createStatement();
+            ResultSet rs = s.executeQuery("Select * From Cuenta "+"Where TipoTarjeta = '" + tar +"' and NoCuenta = '" + nCuenta + "'");
             if(rs.next())
-                return new Cuenta(rs.getString("NoCuenta"),
-                                  rs.getFloat("Saldo"), 
-                                  rs.getString("TipoTarjeta"), 
-                                  rs.getString("Imagen"));
+                return true;
+            else
+                System.err.println("Revise sus datos de registro");
+        }catch(SQLException e){
+            System.err.println("Problemas con la ejecución de su sentencia " + e.getMessage());
+        }        
+        return false;        
+    }
+    
+    @Override
+    public Cuenta consultar(String nCuenta) {
+        try{
+            Statement s = cc.c.createStatement();            
+            ResultSet rs = s.executeQuery("Select * From Cuenta Where NoCuenta = '" + nCuenta + "'");            
+            if(rs.next())
+                return new Cuenta(rs.getFloat("Saldo"), rs.getString("TipoTarjeta"), rs.getString("Imagen"), rs.getString("NoCuenta"));
         }catch(SQLException e){
             System.err.println("Problemas con la consulta " + e.getMessage());
         }
@@ -35,19 +44,15 @@ public class TDD implements Tarjeta{
     }
 
     @Override
-    public void depositar(double cantidad) {
+    public void depositar(double cantidad, String nCuenta) {
         if (cantidad >= 0 ){
             try{
-            Statement s = conec.c.createStatement();
+            Statement s = cc.c.createStatement();
             s.executeUpdate("Update Cuenta Set Saldo = Saldo + "+ cantidad +
-                            " Where Numero= '"+ nCuenta + "'");
+                            " Where NoCuenta= '"+ nCuenta + "'");
             Calendar calendario = Calendar.getInstance();
-            s.execute("Insert into movimientos values ('" + 
-                    nCuenta + "', 'Depósito', "+ "'"+
-                    (calendario.get(Calendar.DAY_OF_MONTH)+"/"+ 
-                     calendario.get(Calendar.MONTH)+"/"+ 
-                     calendario.get(Calendar.YEAR)) + "', " + 
-                    cantidad + ")");
+            s.execute("Insert into movimientos values (" + cantidad + ", 'Depósito'" + ",'" + nCuenta + "', '"
+                    +(calendario.get(Calendar.DAY_OF_MONTH)+"/"+ calendario.get(Calendar.MONTH)+"/"+calendario.get(Calendar.YEAR)) + "')");
             }catch(SQLException e){
                 System.err.println("Problemas con la actualización " +
                                e.getMessage());
@@ -56,21 +61,21 @@ public class TDD implements Tarjeta{
     }
 
     @Override
-    public void retirar(double cantidad) {
-        if (saldo <= cantidad){
+    public void retirar(double cantidad, String nCuenta) {
+        if (saldo >= cantidad){
             try{
-                Statement s = conec.c.createStatement();
+                Statement s = cc.c.createStatement();
                 s.executeUpdate("Update Cuenta Set Saldo = Saldo - "+ cantidad +
-                            " Where Numero= '"+ nCuenta + "'");
+                            " Where NoCuenta= '"+ nCuenta + "'");
                 Calendar calendario = Calendar.getInstance();
-                s.execute("Insert into movimientos values ('" + nCuenta + "', 'Retiro', "+ "'"+
-                        (calendario.get(Calendar.DAY_OF_MONTH)+"/"+ calendario.get(Calendar.MONTH)+"/"+
-                         calendario.get(Calendar.YEAR)) + "', " + cantidad + ")");
+                s.execute("Insert into movimientos values (" + cantidad + ", 'Retiro'" + ",'" + nCuenta + "', '"
+                    +(calendario.get(Calendar.DAY_OF_MONTH)+"/"+ calendario.get(Calendar.MONTH)+"/"+calendario.get(Calendar.YEAR)) + "')");
             }catch(SQLException e){
                 System.err.println("Problemas con la actualización " +
                                e.getMessage());
             }
         }
+        cta.getSaldo();
     }
 
 }

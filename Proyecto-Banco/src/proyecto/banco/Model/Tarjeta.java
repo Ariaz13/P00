@@ -1,15 +1,15 @@
 
 package proyecto.banco.Model;
 
-import javax.swing.JTextField;
-
 public interface Tarjeta {
     
-    abstract Cuenta consultar();
+    abstract boolean verificarTarjeta(String nCuenta);
     
-    abstract void depositar(double cantidad);
+    abstract Cuenta consultar(String nCuenta);
     
-    abstract void retirar(double cantidad);
+    abstract void depositar(double cantidad, String nCuenta);
+    
+    abstract void retirar(double cantidad, String nCuenta);
     
     
 }
