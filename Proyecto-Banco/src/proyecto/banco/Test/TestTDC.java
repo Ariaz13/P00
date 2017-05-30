@@ -1,10 +1,12 @@
 package proyecto.banco.Test;
 
+import proyecto.banco.Model.Cuenta;
 import proyecto.banco.Model.TDC;
 
 public class TestTDC {
     public static void main(String[] args) {
         TDC tc = new TDC();
+        Cuenta cta = new Cuenta();
                         
         System.out.println("Elegir que hacer: 1.-Consultar 2.-Retirar 3.-Depositar");
         
@@ -14,7 +16,10 @@ public class TestTDC {
             case 1: 
                 tc.cc.conectar();
                 tc.verificarTarjeta("1234567890123456");
-                tc.consultar("1234567890123456");            
+                Cuenta cuenta = tc.consultar("1234567890123456"); 
+                System.out.println(cuenta.getSaldo());
+                
+                
             break;
             case 2:
                 tc.cc.conectar();

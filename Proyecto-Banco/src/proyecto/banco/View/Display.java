@@ -14,6 +14,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import proyecto.banco.Model.Conection;
 import proyecto.banco.Model.Cuenta;
+import proyecto.banco.Model.CuentaHabiente;
 import proyecto.banco.Model.TDC;
 import proyecto.banco.Model.TDD;
 import proyecto.banco.Model.Validación;
@@ -22,9 +23,9 @@ public class Display {
     final String imgs = "src/proyecto/banco/View/imgs/";
     JFrame ventana;
     JPanel panel;
-    JTextField nCuenta;
+    JTextField cCuenta ;
     JLabel númeroC;
-    JTextField nip;
+    JTextField cnip;
     JLabel np;
     JLabel ingresar;
     JLabel imagenFondo;
@@ -46,6 +47,8 @@ public class Display {
     TDD tdd = new TDD();
     TDC tdc = new TDC();
     Validación validar = new Validación();
+    CuentaHabiente ch = new CuentaHabiente();
+   
     
     public void show(){
         crear();
@@ -56,9 +59,9 @@ public class Display {
     void crear(){
         ventana = new JFrame();
         panel = new JPanel();
-        nCuenta = new JTextField(16);
+        cCuenta = new JTextField(c.getNumero());
         númeroC = new JLabel();
-        nip = new JTextField(4);
+        cnip = new JTextField(ch.getNip());
         np = new JLabel();
         ingresar = new JLabel();
         imagenFondo = new JLabel();
@@ -89,15 +92,15 @@ public class Display {
         ingresar.setText("Ingrese su número de cuenta");
         ingresar.setVisible(true);
         
-        nCuenta.setBounds(320, 275, 180, 30);
-        nCuenta.setVisible(true);
+        cCuenta.setBounds(320, 275, 180, 30);
+        cCuenta.setVisible(true);
         
         np.setBounds(330, 350, 180, 30);
         np.setText("Ingrese el NIP de la tarjeta");
         np.setVisible(true);
         
-        nip.setBounds(320, 425, 180, 30);
-        nip.setVisible(true);
+        cnip.setBounds(320, 425, 180, 30);
+        cnip.setVisible(true);
 
         continuar.setBounds(650, 370, 100, 40);
         continuar.addActionListener(new botónDerecho());
@@ -139,12 +142,12 @@ public class Display {
         movimientos.setBounds(260, 130, 300, 420);
         movimientos.setVisible(false);
         
-        panel.add(imagenFondo);
-        panel.add(nCuenta);
+        
+        panel.add(cCuenta);
         panel.add(númeroC);
         panel.add(continuar);
         panel.add(cancelar);
-        panel.add(nip);
+        panel.add(cnip);
         panel.add(np);
         panel.add(ingresar);
         panel.add(atrás);
@@ -156,6 +159,7 @@ public class Display {
         panel.add(saldo);
         panel.add(imagen);
         panel.add(movimientos);
+        panel.add(imagenFondo);
         panel.setLayout(null);
     }
 
@@ -169,7 +173,8 @@ public class Display {
         @Override
         public void actionPerformed(ActionEvent e){
             if(e.getSource() == continuar){
-            if(validar.verifyAccount(nCuenta, nip) == true){
+                cc.conectar();
+            if(validar.verifyAccount(c.getNumero(), ch.getNip()) == true){
                 consultar.setVisible(true);
                 retirar.setVisible(true);
                 depositar.setVisible(true);
@@ -177,7 +182,7 @@ public class Display {
                 nombre.setVisible(true);
                 nombre.setText("");
                 númeroC.setVisible(true);
-                númeroC.setText(nCuenta.getText());
+                númeroC.setText(cCuenta.getText());
                 saldo.setVisible(true);
                 saldo.setText("");
                 
@@ -185,21 +190,22 @@ public class Display {
                 // - Consulta el saldo actual de la tarjeta
                 // - A su vez despliega la lista de movimientos que se han registrado
                     movimientos.setVisible(true);
-                    tdd.consultar(nCuenta);
-                    tdc.consultar(nCuenta);
+                    tdd.consultar(c.getNumero());
+                    tdc.consultar(c.getNumero());
                 } else if(e.getSource() == retirar){
                     cantidad = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el monto", "Retirar"));
-                    tdd.retirar(cantidad, nCuenta);
-                    tdc.retirar(cantidad, nCuenta);
+                    tdd.retirar(cantidad, c.getNumero());
+                    tdc.retirar(cantidad, c.getNumero()
+                    );
                 } else if(e.getSource() == depositar){
                     cantidad = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el monto", "Depositar"));
-                    tdd.depositar(cantidad, nCuenta);
+                    tdd.depositar(cantidad, c.getNumero());
                     
                 } else if(e.getSource() == transferir){
                     JOptionPane.showMessageDialog(null, "Operación no disponible",
                         "Transferencia de saldos", JOptionPane.ERROR_MESSAGE);
                 } else if(e.getSource() == continuar){
-                    validar.verifyAccount(nCuenta, nip);
+                    validar.verifyAccount(c.getNumero(), ch.getNip());
                     cc.conectar();
                 } else if(e.getSource() == cancelar){
                     ventana.setResizable(false);

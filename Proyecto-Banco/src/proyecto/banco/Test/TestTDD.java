@@ -14,18 +14,20 @@ public class TestTDD {
         switch (r){
             case 1: 
                 td.cc.conectar();
-                td.verificarTarjeta("1234567890123456");
-                td.consultar("1234567890123456");
+                td.verificarTarjeta("9876543210987654");
+                td.consultar("9876543210987654");
     
             break;
             case 2:
                 td.cc.conectar();
-                td.retirar(-300,"1234567890123456");
+                td.verificarTarjeta("9876543210987654");
+                td.retirar(300,"9876543210987654");
                 td.cc.desconectar();
             break;
             case 3:
                 td.cc.conectar();
-                td.depositar(400, "1234567890123456");
+                td.verificarTarjeta("9876543210987654");
+                td.depositar(400, "9876543210987654");
                 td.cc.desconectar();
             break;
         }

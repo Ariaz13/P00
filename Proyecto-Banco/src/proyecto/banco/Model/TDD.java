@@ -5,6 +5,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Calendar;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class TDD implements Tarjeta{
     
@@ -21,7 +23,7 @@ public class TDD implements Tarjeta{
             if(rs.next())
                 return true;
             else
-                System.err.println("Revise sus datos de registro");
+                System.err.println("No coinciden la tarjeta");
         }catch(SQLException e){
             System.err.println("Problemas con la ejecución de su sentencia " + e.getMessage());
         }        
@@ -34,7 +36,7 @@ public class TDD implements Tarjeta{
             Statement s = cc.c.createStatement();            
             ResultSet rs = s.executeQuery("Select * From Cuenta Where NoCuenta = '" + nCuenta + "'");            
             if(rs.next())
-                return new Cuenta(rs.getFloat("Saldo"), rs.getString("TipoTarjeta"), rs.getString("Imagen"), rs.getString("NoCuenta"));
+                return new Cuenta(rs.getFloat("Saldo"), rs.getString("TipoTarjeta"), rs.getString("NoCuenta"));
         }catch(SQLException e){
             System.err.println("Problemas con la consulta " + e.getMessage());
         }
@@ -57,6 +59,11 @@ public class TDD implements Tarjeta{
                 System.err.println("Problemas con la actualización " +
                                e.getMessage());
             }
+        }try {
+            cta.depósito(cantidad);
+            cta.setSaldo(cantidad);
+        } catch (OperaciónErronea ex) {
+            System.out.println(ex.getMensaje());
         }
     }
 
@@ -75,7 +82,14 @@ public class TDD implements Tarjeta{
                                e.getMessage());
             }
         }
-        cta.getSaldo();
+        try {
+            cta.retiro(cantidad);
+            cta.setSaldo(cantidad);
+        } catch (CantidadInsuficiente ex) {
+            System.out.println(ex.getMensaje());
+        } catch (OperaciónErronea ex) {
+            System.out.println(ex.getMensaje());
+        }
     }
 
 }

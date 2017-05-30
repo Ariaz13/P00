@@ -1,10 +1,10 @@
 
 package proyecto.banco.Model;
 
-import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 public class Movimientos {
     private double cantidad;
@@ -19,11 +19,10 @@ public class Movimientos {
         this.nCuenta = nCuenta;
     }
     
-    public Movimientos(){
+    public Movimientos (){
         
     }
-    
-    
+   
     public void setCantidad(double c){
         this.cantidad = c;
     }
@@ -58,18 +57,28 @@ public class Movimientos {
     
     public Conection cc = new Conection();
     
-    public Movimientos verMovimientos (String nCuenta) {
+        
+    public ArrayList<String> verMov( String nCuenta){
+        ArrayList <String> lista = new ArrayList();
         try{
-            Statement s = cc.c.createStatement();            
-            ResultSet rs = s.executeQuery("Select * From Movimientos Where NoCuenta = '" + nCuenta + "'");            
-            if(rs.next())
-                return new Movimientos(rs.getDouble("MONTO"), rs.getString("Tipo"), rs.getString("NoCuenta"), rs.getString("Fecha"));
-        }catch(SQLException e){
-            System.err.println("Problemas con la consulta " + e.getMessage());
+            String sql = "Select * from Movimientos Where NoCuenta = '" + nCuenta + "'";
+            ResultSet rs;
+            try (Statement st = cc.c.createStatement()) {
+                rs = st.executeQuery(sql);
+                while (rs.next()){
+                    lista.add(rs.getDouble("Monto")   + "," +
+                            rs.getString("Tipo")    + "," +
+                            rs.getString("NoCuenta") + ","+
+                            rs.getString("Fecha"));
+                }
+            }
+             rs.close();
+             return lista;
+             
+        }catch (SQLException ex){
+            System.err.println("Fallo" + ex.getMessage());
+            return null;
         }
         
-        return null;   
-
-    }
-        
+}
 }

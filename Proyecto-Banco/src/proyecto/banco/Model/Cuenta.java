@@ -5,21 +5,23 @@ public class Cuenta {
 
     private String numero;  //Numero de cuenta
     private double saldo;   //Saldo que tiene la cuenta
-    private String imagen;  
     private String tipoTarjeta; //Si es de Crédito o Debito
     
-    public Cuenta(double saldo, String imagen, String tipoTarjeta, String numero){
+    
+    public Cuenta(double saldo,  String tipoTarjeta, String numero){
         this.numero = numero;
         this.saldo = saldo;
-        this.imagen = imagen;
+        
         this.tipoTarjeta = tipoTarjeta;
     }
     
-    public Cuenta(double saldo, String imagen){        
-        this.saldo = saldo;
-        this.imagen = imagen;
+   
+    
+       
+    public Cuenta (String numero){
+        String num = this.getNumero(); 
     }
-
+    
     public Cuenta() {
         
     }
@@ -32,8 +34,7 @@ public class Cuenta {
         return this.numero;
     }
     		
-    public void setSaldo(double cantidad) 
-            throws OperaciónErronea{
+    public void setSaldo(double cantidad) throws OperaciónErronea{
         if(cantidad >= 0)
             saldo = cantidad;
         else
@@ -45,13 +46,6 @@ public class Cuenta {
         return saldo;
     }
     
-    public void setImagen(String imagen){
-        this.imagen = imagen;
-    }
-    
-    public String getImagen(){
-        return this.imagen;
-    }
     
     public void setTipoTarjeta(String tarjeta){
         this.tipoTarjeta = tarjeta;
