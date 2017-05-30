@@ -20,10 +20,11 @@ public class TDC implements Tarjeta{
         try{
             Statement s = cc.c.createStatement();
             ResultSet rs = s.executeQuery("Select * From Cuenta "+"Where TipoTarjeta = '" + tar +"' and NoCuenta = '" + nCuenta + "'");
-            if(rs.next())
+            if(rs.next()){
                 return true;
-            else
-                System.err.println("No Coincide la tarjeta");
+            }else{
+                
+            }
         }catch(SQLException e){
             System.err.println("Problemas con la ejecución de su sentencia " + e.getMessage());
         }        
@@ -36,9 +37,9 @@ public class TDC implements Tarjeta{
         try{
             Statement s = cc.c.createStatement();            
             ResultSet rs = s.executeQuery("Select * From Cuenta "+ " Where NoCuenta = '" + nCuenta + "'");            
-            if(rs.next())
+            if(rs.next()){
                 return new Cuenta(rs.getFloat("Saldo"), rs.getString("TipoTarjeta"), rs.getString("NoCuenta"));
-                
+            }    
         }catch(SQLException e){
             System.err.println("Problemas con la consulta " + e.getMessage());
         }

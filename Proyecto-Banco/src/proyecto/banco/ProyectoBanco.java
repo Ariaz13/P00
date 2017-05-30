@@ -4,31 +4,69 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import proyecto.banco.Model.*;
-import proyecto.banco.Test.TestMovimientos;
 
 public class ProyectoBanco {
-
-    public static void main(String[] args) {
-        Cuenta cta = new Cuenta();
-        Conection c = new Conection(); 
+Conection c = new Conection();
+Cuenta cta = new Cuenta();
         CuentaHabiente ch = new CuentaHabiente();
         TDC tc = new TDC();
         TDD td = new TDD();
         Validación v = new Validación();
         Movimientos mov = new Movimientos();
+        String cuenta;
         
+    public static void main(String[] args) {
+        ProyectoBanco b = new ProyectoBanco();
+        b.show();
+    
+    }
+    void show(){
+        conectarTDC();
+        conectarTDD();
+        verificar();
+        comparar();
+    }
+    
+    void conectarTDC(){
+        v.cc.conectar();
+        tc.cc.conectar();
+        mov.cc.conectar();
+    }
+    
+    void conectarTDD(){
+        v.cc.conectar();
+        td.cc.conectar();
+        mov.cc.conectar();
+    }
+    
+    void verificar(){
         System.out.println("Ingrese su numero de Cuenta");
-        String cuenta = new java.util.Scanner(System.in).next();
+        cuenta = new java.util.Scanner(System.in).next();
         
         System.out.println("Ingrese su NIP");
         int nip = new java.util.Scanner(System.in).nextInt();
         
-        v.cc.conectar();
         if (v.verifyAccount(cuenta, nip) == true){
-            tc.cc.conectar();
-            if (tc.verificarTarjeta(cuenta) == true){
-                
-                System.out.println("Elija que movimiento desea realizar  \n1.-Consulta \n2.-Retiro \n3.-Deposito");
+            comparar();
+        }
+    }
+    
+    void comparar(){
+        if (tc.verificarTarjeta(cuenta) == true){
+            conectarTDC();
+            procesoTDC();
+        }
+        else if (td.verificarTarjeta(cuenta) == true){
+            conectarTDD();
+            procesoTDD();
+        }
+        else{
+            System.out.println("No coincide la tarjeta");
+        }   
+    }
+    
+    void procesoTDC(){
+        System.out.println("Elija que movimiento desea realizar  \n1.-Consulta \n2.-Retiro \n3.-Deposito");
                 int m = new java.util.Scanner(System.in).nextInt();
                 switch (m){
                     case 1:
@@ -40,13 +78,9 @@ public class ProyectoBanco {
                         }else{
                            ArrayList<String> l = new ArrayList();
         
-                            mov.cc.conectar();
                             l = mov.verMov("" + cuenta);
                             for (int i=0; i<l.size(); i ++)                          
                             System.out.println(l.get(i));
-                            mov.cc.desconectar(); 
-                            //System.exit(0);
-                           
                         }
                     break;
                     case 2:
@@ -66,18 +100,17 @@ public class ProyectoBanco {
                     } catch (OperaciónErronea ex) {
                         Logger.getLogger(ProyectoBanco.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                
+                    break;
+                    case 4:
+                        desconectarTDC();
+                        System.out.println("Regrese pronto.");
                     break;
                     default: System.out.println("\"Operacion Erronea\"");
-                        
                 }
-                
-            }tc.cc.desconectar();
-            
-            td.cc.conectar();
-            if (td.verificarTarjeta(cuenta) == true){
-                
-                System.out.println("Elija que movimiento desea realizar  \n1.-Consulta \n2.-Retiro \n3.-Deposito");
+    }
+    
+    void procesoTDD(){
+        System.out.println("Elija que movimiento desea realizar  \n1.-Consulta \n2.-Retiro \n3.-Deposito \n4.-Cerrar sesión");
                 int m = new java.util.Scanner(System.in).nextInt();
                 switch (m){
                     case 1:
@@ -88,12 +121,9 @@ public class ProyectoBanco {
                             System.out.println(c1.getSaldo());
                         }else{
                            ArrayList<String> l = new ArrayList();
-        
-                            mov.cc.conectar();
                             l = mov.verMov("" + cuenta);
                             for (int i=0; i<l.size(); i ++)                          
                             System.out.println(l.get(i));
-                            mov.cc.desconectar(); 
                            
                         }
                     break;
@@ -114,16 +144,26 @@ public class ProyectoBanco {
                     } catch (OperaciónErronea ex) {
                         Logger.getLogger(ProyectoBanco.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                
                     break;
-                    default: System.out.println("\"Operacion Erronea\"");
-                        
-                }
-                
-            }td.cc.desconectar();
-            
-        }    
+                    case 4:
+                        desconectarTDD();
+                        System.out.println("Regrese pronto.");
+                    break;
+                    default: System.out.println("Operación errónea.");
+                } while(m != 4);
     }
-  }
+
+    void desconectarTDC(){
+        v.cc.desconectar();
+        tc.cc.desconectar();
+        mov.cc.desconectar();
+    }
+    
+    void desconectarTDD(){
+        v.cc.desconectar();
+        td.cc.desconectar();
+        mov.cc.desconectar();
+    }
+}
 
 
