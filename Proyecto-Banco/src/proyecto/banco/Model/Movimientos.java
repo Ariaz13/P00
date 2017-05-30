@@ -2,12 +2,27 @@
 package proyecto.banco.Model;
 
 import java.sql.Date;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
-public class Movimientos extends Exception{
+public class Movimientos {
     private double cantidad;
     private String tipoMov;
-    private Date fechaMov;
-    private double saldo;
+    private String fechaMov;
+    private String nCuenta;
+
+    public Movimientos(double cantidad, String tipoMov, String nCuenta, String fecha) {
+        this.cantidad = cantidad;
+        this.tipoMov = tipoMov;
+        this.fechaMov = fecha;
+        this.nCuenta = nCuenta;
+    }
+    
+    public Movimientos(){
+        
+    }
+    
     
     public void setCantidad(double c){
         this.cantidad = c;
@@ -25,20 +40,36 @@ public class Movimientos extends Exception{
         return tipoMov;
     }
     
-    public void setFechaMov(Date fM){
+    public void setFechaMov(String fM){
         this.fechaMov = fM;
     }
     
-    public Date getFechaMov(){
+    public String getFechaMov(){
         return fechaMov;
     }
     
-    public void setSaldo(double s){
-        this.saldo = s;
+    public void setNCuenta(String cta){
+        this.nCuenta = cta;
     }
     
-    public double getSaldo(){
-        return saldo;
+    public String getNCuenta (){
+        return nCuenta;
+    }
+    
+    public Conection cc = new Conection();
+    
+    public Movimientos verMovimientos (String nCuenta) {
+        try{
+            Statement s = cc.c.createStatement();            
+            ResultSet rs = s.executeQuery("Select * From Movimientos Where NoCuenta = '" + nCuenta + "'");            
+            if(rs.next())
+                return new Movimientos(rs.getDouble("MONTO"), rs.getString("Tipo"), rs.getString("NoCuenta"), rs.getString("Fecha"));
+        }catch(SQLException e){
+            System.err.println("Problemas con la consulta " + e.getMessage());
+        }
+        
+        return null;   
+
     }
         
 }
