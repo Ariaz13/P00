@@ -150,7 +150,7 @@ Cuenta cta = new Cuenta();
                         System.out.println("Regrese pronto.");
                     break;
                     default: System.out.println("Operación errónea.");
-                } while(m != 4);
+                } while(m = 4);
     }
 
     void desconectarTDC(){
