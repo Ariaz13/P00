@@ -81,7 +81,7 @@ public class Display {
         ventana.setLocationRelativeTo(null);
         ventana.setResizable(false);
 
-        imagenFondo.setIcon(new ImageIcon(imgs + "frente1.jpg"));
+        imagenFondo.setIcon(adaptar(imgs + "frente1.jpg"));
         imagenFondo.setBounds(0, 0, 800, 600);
         imagenFondo.setVisible(true);
 
@@ -168,8 +168,8 @@ public class Display {
     class botónDerecho implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent e){
+            if(e.getSource() == continuar){
             if(validar.verifyAccount(nCuenta, nip) == true){
-                cc.conectar();
                 consultar.setVisible(true);
                 retirar.setVisible(true);
                 depositar.setVisible(true);
@@ -202,6 +202,7 @@ public class Display {
                     validar.verifyAccount(nCuenta, nip);
                     cc.conectar();
                 } else if(e.getSource() == cancelar){
+                    ventana.setResizable(false);
                     cc.desconectar();
                     ventana.setDefaultCloseOperation(JFrame.ERROR);
                 } else if(e.getSource() == atrás){
@@ -209,7 +210,7 @@ public class Display {
                 }
             }
         }
-        
+      }  
     }
     
     private ImageIcon adaptar(String archivo){

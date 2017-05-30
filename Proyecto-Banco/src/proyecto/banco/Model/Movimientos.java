@@ -1,19 +1,19 @@
 
 package proyecto.banco.Model;
 
+import java.sql.Date;
+
 public class Movimientos extends Exception{
-    private int cantidad;
+    private double cantidad;
     private String tipoMov;
-    private String fechaMov;
-    private long saldo;
-    private long retiro;
-    private long depósito;
+    private Date fechaMov;
+    private double saldo;
     
-    public void setCantidad(int c){
+    public void setCantidad(double c){
         this.cantidad = c;
     }
     
-    public int getCantidad(){
+    public double getCantidad(){
         return cantidad;
     }
     
@@ -25,40 +25,20 @@ public class Movimientos extends Exception{
         return tipoMov;
     }
     
-    public void setFechaMov(String fM){
+    public void setFechaMov(Date fM){
         this.fechaMov = fM;
     }
     
-    public String getFechaMov(){
+    public Date getFechaMov(){
         return fechaMov;
     }
     
-    public void setSaldo(long s){
+    public void setSaldo(double s){
         this.saldo = s;
     }
     
-    public long getSaldo(){
+    public double getSaldo(){
         return saldo;
     }
-    
-    public void setRetiro(long r){
-        this.retiro = r;
-    }
-    
-    public long getRetiro(){
-        return retiro;
-    }
-    
-    public void setDepósito(long d){
-        this.depósito = d;
-    }
-    
-    public long getDepósito(){
-        if(depósito <= 0){
-            
-        } else{
-            
-        }
-            return depósito;
-    }
+        
 }

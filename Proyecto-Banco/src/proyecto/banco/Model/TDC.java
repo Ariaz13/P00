@@ -1,33 +1,30 @@
 
 package proyecto.banco.Model;
 
-import java.awt.Image;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Calendar;
-import javax.swing.JTextField;
 
-public class TDC extends Tarjeta{
+public class TDC implements Tarjeta{
     
     Conection conec = new Conection();
-     String nombre = "Tarjeta de Crédito";
+    Cuenta cta = new Cuenta();
     
-    public TDC(long noCuenta, Image foto, float saldo) {
-        super(noCuenta, foto, saldo);
-    }
+    String nCuenta = cta.getNumero();
+    double saldo = cta.getSaldo();
+    String tarjeta = cta.getTipoTarjeta();
+    
 
-    public TDC() {
-        
-    }
 
-    public Cuenta consultar(JTextField nCuenta) {
+    @Override
+    public Cuenta consultar() {
         try{
             Statement s = conec.c.createStatement();            
             ResultSet rs = s.executeQuery("Select * From Cuenta "+
                                           "Where NoCuenta = '" + nCuenta + "'");            
             if(rs.next())
-                return new Cuenta(rs.getInt("NoCuenta"),
+                return new Cuenta(rs.getString("NoCuenta"),
                                   rs.getFloat("Saldo"), 
                                   rs.getString("TipoTarjeta"), 
                                   rs.getString("Imagen"));
@@ -39,7 +36,7 @@ public class TDC extends Tarjeta{
     }
 
     @Override
-    public void depositar(double cantidad, JTextField nCuenta) {
+    public void depositar(double cantidad) {
         if (cantidad >= 0 ){
             try{
             Statement s = conec.c.createStatement();
@@ -59,7 +56,8 @@ public class TDC extends Tarjeta{
         }
     }
 
-    public void retirar(double cantidad, JTextField nCuenta) {
+    @Override
+    public void retirar(double cantidad) {
         try{
             Statement s = conec.c.createStatement();
             s.executeUpdate("Update Cuenta Set Saldo = Saldo - "+ cantidad +

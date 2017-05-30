@@ -1,7 +1,7 @@
 
 package proyecto.banco.Test;
 
-import View.Display;
+import proyecto.banco.View.Display;
 
 public class TestDisplay {
 

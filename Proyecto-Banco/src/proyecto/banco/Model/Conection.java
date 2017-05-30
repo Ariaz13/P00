@@ -34,19 +34,12 @@ public class Conection {
         return false;        
     }
     
+    
         public void desconectar(){
         try {
         c.close();
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
-    }
-        
-    public static void main(String[] args) {
-        Conection conect = new Conection ();
-        
-        conect.conectar();
-        conect.desconectar();
-    }
-    
+    }    
 }

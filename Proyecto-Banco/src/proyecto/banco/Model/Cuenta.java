@@ -3,52 +3,45 @@ package proyecto.banco.Model;
 
 public class Cuenta {
 
-    private int numero;
-    private float saldo;
-    private String imagen;
-    private String tipoTarjeta;
+    private String numero;  //Numero de cuenta
+    private double saldo;   //Saldo que tiene la cuenta
+    private String imagen;  
+    private String tipoTarjeta; //Si es de Crédito o Debito
     
-    public Cuenta(int numero, float saldo, String imagen, String tipoTarjeta){
+    public Cuenta(String numero, double saldo, String imagen, String tipoTarjeta){
         this.numero = numero;
         this.saldo = saldo;
         this.imagen = imagen;
         this.tipoTarjeta = tipoTarjeta;
     }
     
-    public Cuenta(float saldo, String imagen){        
+    public Cuenta(double saldo, String imagen){        
         this.saldo = saldo;
         this.imagen = imagen;
     }
 
     public Cuenta() {
+        
     }
     
-    public void setNumero(int numero){
+    public void setNumero(String numero){
         this.numero = numero;
     }
     
-    public int getNumero(){
+    public String getNumero(){
         return this.numero;
     }
-    
-	/*  El método setSaldo aplica para cuentas de débito, en las
-		que el saldo no puede ser menor a cero, habrá de ajustarse
-		sobre todo para cuentas derivadas de crédito y de débito.
-
-		El interés por ahora es colocar excepciones definidas por 
-		el usuario
-	*/
-		
-    public void setSaldo(int cantidad) 
-            throws MontoIncorrecto{
+    		
+    public void setSaldo(double cantidad) 
+            throws OperaciónErronea{
         if(cantidad >= 0)
             saldo = cantidad;
         else
-            throw new MontoIncorrecto("Cantidad incorrecta\n" +
+            throw new OperaciónErronea("Cantidad incorrecta\n" +
                                       "la cuenta es de débito");
     }
     
-    public float getSaldo(){
+    public double getSaldo(){
         return saldo;
     }
     
@@ -60,18 +53,26 @@ public class Cuenta {
         return this.imagen;
     }
     
-    public void depósito(float cantidad) throws MontoIncorrecto{
+    public void setTipoTarjeta(String tarjeta){
+        this.tipoTarjeta = tarjeta;
+    }
+    
+    public String getTipoTarjeta (){
+        return this.tipoTarjeta;
+    }
+    
+    public void depósito(double cantidad) throws OperaciónErronea{
         if(cantidad >= 0)
             saldo += cantidad;
         else
-            throw new MontoIncorrecto("Cantidad incorrecta\n" + 
+            throw new OperaciónErronea("Cantidad incorrecta\n" + 
                                       "Se intentó depositar $" + cantidad +
 									  "\nNo se reciben depósitos negativos");
     }
     
-    public float retiro(float cantidad) throws SaldoInsuficiente{
+    public double retiro(double cantidad) throws CantidadInsuficiente{
         if(saldo < cantidad)
-            throw new SaldoInsuficiente("Fondos insuficientes");
+            throw new CantidadInsuficiente("Fondos insuficientes");
         else{
             saldo -= cantidad;
             return cantidad;

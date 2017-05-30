@@ -1,33 +1,28 @@
 
 package proyecto.banco.Model;
 
-import java.awt.Image;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Calendar;
-import javax.swing.JTextField;
 
-public class TDD extends Tarjeta{
+public class TDD implements Tarjeta{
     
     Conection conec = new Conection();
-    String nombre = "Tarjeta de Debito";
-    public TDD(long noCuenta, Image foto, float saldo) {
-        super(noCuenta, foto, saldo);
-    }
-
-    public TDD() {
-        
-    }
+    Cuenta cta = new Cuenta();
     
-    @Override
-    public Cuenta consultar(JTextField nCuenta) {
+    String nCuenta = cta.getNumero();
+    double saldo = cta.getSaldo();
+    String tarjeta = cta.getTipoTarjeta();
+
+    
+    public Cuenta consultar() {
         try{
             Statement s = conec.c.createStatement();            
             ResultSet rs = s.executeQuery("Select * From Cuenta "+
                                           "Where NoCuenta = '" + nCuenta + "'");            
             if(rs.next())
-                return new Cuenta(rs.getInt("NoCuenta"),
+                return new Cuenta(rs.getString("NoCuenta"),
                                   rs.getFloat("Saldo"), 
                                   rs.getString("TipoTarjeta"), 
                                   rs.getString("Imagen"));
@@ -39,7 +34,8 @@ public class TDD extends Tarjeta{
 
     }
 
-    public void depositar(double cantidad, JTextField nCuenta) {
+    @Override
+    public void depositar(double cantidad) {
         if (cantidad >= 0 ){
             try{
             Statement s = conec.c.createStatement();
@@ -59,8 +55,9 @@ public class TDD extends Tarjeta{
         }
     }
 
-    public void retirar(double cantidad, JTextField nCuenta) {
-        if (getSaldo() <= cantidad){
+    @Override
+    public void retirar(double cantidad) {
+        if (saldo <= cantidad){
             try{
                 Statement s = conec.c.createStatement();
                 s.executeUpdate("Update Cuenta Set Saldo = Saldo - "+ cantidad +
