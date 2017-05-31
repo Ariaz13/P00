@@ -12,10 +12,11 @@ public class Validación {
         try{
             Statement s = cc.c.createStatement();
             ResultSet rs = s.executeQuery("Select * From CuentaHabiente "+ "Where NoCuenta = '" + nCuenta +"' and PIN = " + nip );
-            if(rs.next())
+            if(rs.next()){
                 return true;
-            else
-                System.err.println("Revise sus datos de registro");
+            }else{
+                return false;
+            }
         }catch(SQLException e){
             System.err.println("Problemas con la ejecución de su sentencia " + e.getMessage());
         }        

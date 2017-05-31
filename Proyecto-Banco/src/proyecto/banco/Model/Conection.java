@@ -23,10 +23,11 @@ public class Conection {
             ResultSet rs = s.executeQuery("Select * From CuentaHabiente "+
                                           "Where NoCuenta = '" + number +
                                           "' and PIN = " + pin );            
-            if(rs.next())
+            if(rs.next()){
                 return true;
-            else
+            }else{
                 System.err.println("Revise sus datos de registro");
+            }
         }catch(SQLException e){
             System.err.println("Problemas con la ejecución de su sentencia " + 
                                e.getMessage());
@@ -34,8 +35,7 @@ public class Conection {
         return false;        
     }
     
-    
-        public void desconectar(){
+    public void desconectar(){
         try {
         c.close();
         } catch (SQLException ex) {

@@ -23,7 +23,7 @@ public class TDD implements Tarjeta{
             if(rs.next()){
                 return true;
             }else{
-                
+                return false;
             }
         }catch(SQLException e){
             System.err.println("Problemas con la ejecución de su sentencia " + e.getMessage());

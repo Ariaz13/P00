@@ -66,7 +66,7 @@ Cuenta cta = new Cuenta();
     }
     
     void procesoTDC(){
-        System.out.println("Elija que movimiento desea realizar  \n1.-Consulta \n2.-Retiro \n3.-Deposito");
+        System.out.println("Elija que movimiento desea realizar  \n1.-Consulta \n2.-Retiro \n3.-Deposito \n4.-Cerrar sesión");
                 int m = new java.util.Scanner(System.in).nextInt();
                 switch (m){
                     case 1:
@@ -77,36 +77,39 @@ Cuenta cta = new Cuenta();
                             System.out.println(c1.getSaldo());
                         }else{
                            ArrayList<String> l = new ArrayList();
-        
                             l = mov.verMov("" + cuenta);
                             for (int i=0; i<l.size(); i ++)                          
                             System.out.println(l.get(i));
                         }
                     break;
+                    
                     case 2:
                         System.out.println("Ingrese la cantidad");
                         double cant = new java.util.Scanner(System.in).nextInt();
                         tc.retirar(cant, cuenta);              
-                        
                     break;
+                    
                     case 3:
-                                
                     try {
                         System.out.println("Ingrese la cantidad");
                         double cantd = new java.util.Scanner(System.in).nextInt();
                         if (cantd >= 0){
-                        tc.depositar(jcantd, cuenta);}
+                        tc.depositar(cantd, cuenta);}
                         cta.depósito(cantd);
                     } catch (OperaciónErronea ex) {
                         Logger.getLogger(ProyectoBanco.class.getName()).log(Level.SEVERE, null, ex);
                     }
                     break;
+                    
                     case 4:
                         desconectarTDC();
-                        System.out.println("Regrese pronto.");
+                        System.out.println("Regrese pronto.\n");
+                        show();
                     break;
+                    
                     default: System.out.println("\"Operacion Erronea\"");
-                } while(m = 4);
+                    
+                } while(m == 4);
     }
     
     void procesoTDD(){
@@ -124,17 +127,16 @@ Cuenta cta = new Cuenta();
                             l = mov.verMov("" + cuenta);
                             for (int i=0; i<l.size(); i ++)                          
                             System.out.println(l.get(i));
-                           
                         }
                     break;
+                    
                     case 2:
                         System.out.println("Ingrese la cantidad");
                         double cant = new java.util.Scanner(System.in).nextInt();
                         td.retirar(cant, cuenta);              
-                        
                     break;
+                    
                     case 3:
-                                
                     try {
                         System.out.println("Ingrese la cantidad");
                         double cantd = new java.util.Scanner(System.in).nextInt();
@@ -145,12 +147,16 @@ Cuenta cta = new Cuenta();
                         Logger.getLogger(ProyectoBanco.class.getName()).log(Level.SEVERE, null, ex);
                     }
                     break;
+                    
                     case 4:
                         desconectarTDD();
-                        System.out.println("Regrese pronto.");
+                        System.out.println("Regrese pronto.\n");
+                        show();
                     break;
-                    default: System.out.println("Operación errónea.");
-                } while(m = 4);
+                    
+                    default: System.out.println("\"Operacion Erronea\"");
+                    
+                } while(m == 4);
     }
 
     void desconectarTDC(){
