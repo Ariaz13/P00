@@ -1,12 +1,9 @@
-
 package proyecto.banco.Model;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Calendar;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class TDD implements Tarjeta{
     
@@ -41,9 +38,7 @@ public class TDD implements Tarjeta{
         }catch(SQLException e){
             System.err.println("Problemas con la consulta " + e.getMessage());
         }
-        
         return null;   
-
     }
 
     @Override

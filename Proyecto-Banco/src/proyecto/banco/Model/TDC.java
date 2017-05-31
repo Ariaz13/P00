@@ -1,12 +1,9 @@
-
 package proyecto.banco.Model;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Calendar;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class TDC implements Tarjeta{
     
@@ -30,7 +27,6 @@ public class TDC implements Tarjeta{
         }        
         return false;        
     }
-
     
     @Override
     public Cuenta consultar(String nCuenta) {
@@ -43,7 +39,6 @@ public class TDC implements Tarjeta{
         }catch(SQLException e){
             System.err.println("Problemas con la consulta " + e.getMessage());
         }
-        
         return null; 
     }
 
@@ -71,7 +66,6 @@ public class TDC implements Tarjeta{
 
     @Override
     public void retirar(double cantidad, String nCuenta) {
-        
         if (cantidad >= 0)
         try{
             Statement s = cc.c.createStatement();

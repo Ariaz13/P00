@@ -1,4 +1,3 @@
-
 package proyecto.banco.View;
 
 import java.awt.Image;
@@ -142,7 +141,6 @@ public class Display {
         movimientos.setBounds(260, 130, 300, 420);
         movimientos.setVisible(false);
         
-        
         panel.add(cCuenta);
         panel.add(númeroC);
         panel.add(continuar);
@@ -174,49 +172,10 @@ public class Display {
         public void actionPerformed(ActionEvent e){
             if(e.getSource() == continuar){
                 cc.conectar();
-            if(validar.verifyAccount(c.getNumero(), ch.getNip()) == true){
-                consultar.setVisible(true);
-                retirar.setVisible(true);
-                depositar.setVisible(true);
-                transferir.setVisible(true);
-                nombre.setVisible(true);
-                nombre.setText("");
-                númeroC.setVisible(true);
-                númeroC.setText(cCuenta.getText());
-                saldo.setVisible(true);
-                saldo.setText("");
-                
-                if(e.getSource() == consultar){
-                // - Consulta el saldo actual de la tarjeta
-                // - A su vez despliega la lista de movimientos que se han registrado
-                    movimientos.setVisible(true);
-                    tdd.consultar(c.getNumero());
-                    tdc.consultar(c.getNumero());
-                } else if(e.getSource() == retirar){
-                    cantidad = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el monto", "Retirar"));
-                    tdd.retirar(cantidad, c.getNumero());
-                    tdc.retirar(cantidad, c.getNumero()
-                    );
-                } else if(e.getSource() == depositar){
-                    cantidad = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el monto", "Depositar"));
-                    tdd.depositar(cantidad, c.getNumero());
-                    
-                } else if(e.getSource() == transferir){
-                    JOptionPane.showMessageDialog(null, "Operación no disponible",
-                        "Transferencia de saldos", JOptionPane.ERROR_MESSAGE);
-                } else if(e.getSource() == continuar){
-                    validar.verifyAccount(c.getNumero(), ch.getNip());
-                    cc.conectar();
-                } else if(e.getSource() == cancelar){
-                    ventana.setResizable(false);
-                    cc.desconectar();
-                    ventana.setDefaultCloseOperation(JFrame.ERROR);
-                } else if(e.getSource() == atrás){
-                    
-                }
+            
             }
         }
-      }  
+    
     }
     
     private ImageIcon adaptar(String archivo){
@@ -225,11 +184,4 @@ public class Display {
         return ir;
     }
     
-    // - Esto no va aquí -
-    public static void main(String[] args) {
-        Display run = new Display();
-        
-        run.show();
-    }
-
 }

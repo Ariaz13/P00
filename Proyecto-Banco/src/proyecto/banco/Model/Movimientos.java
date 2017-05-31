@@ -1,4 +1,3 @@
-
 package proyecto.banco.Model;
 
 import java.sql.ResultSet;
@@ -56,7 +55,6 @@ public class Movimientos {
     }
     
     public Conection cc = new Conection();
-    
         
     public ArrayList<String> verMov( String nCuenta){
         ArrayList <String> lista = new ArrayList();
@@ -79,6 +77,6 @@ public class Movimientos {
             System.err.println("Fallo" + ex.getMessage());
             return null;
         }
-        
-}
+    }
+    
 }

@@ -1,4 +1,3 @@
-
 package proyecto.banco.Model;
 
 public class Cuenta {
@@ -14,9 +13,6 @@ public class Cuenta {
         
         this.tipoTarjeta = tipoTarjeta;
     }
-    
-   
-    
        
     public Cuenta (String numero){
         String num = this.getNumero(); 
@@ -46,7 +42,6 @@ public class Cuenta {
         return saldo;
     }
     
-    
     public void setTipoTarjeta(String tarjeta){
         this.tipoTarjeta = tarjeta;
     }
@@ -61,7 +56,7 @@ public class Cuenta {
         else
             throw new OperaciónErronea("Cantidad incorrecta\n" + 
                                       "Se intentó depositar $" + cantidad +
-									  "\nNo se reciben depósitos negativos");
+                                    "\nNo se reciben depósitos negativos");
     }
     
     public double retiro(double cantidad) throws CantidadInsuficiente{

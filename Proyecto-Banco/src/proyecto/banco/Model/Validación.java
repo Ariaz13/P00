@@ -1,4 +1,3 @@
-
 package proyecto.banco.Model;
 
 import java.sql.ResultSet;

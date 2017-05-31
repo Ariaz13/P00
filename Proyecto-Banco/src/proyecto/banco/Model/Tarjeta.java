@@ -1,4 +1,3 @@
-
 package proyecto.banco.Model;
 
 public interface Tarjeta {
@@ -10,6 +9,5 @@ public interface Tarjeta {
     abstract void depositar(double cantidad, String nCuenta);
     
     abstract void retirar(double cantidad, String nCuenta);
-    
     
 }

@@ -18,14 +18,14 @@ public class TestTDC {
                 tc.verificarTarjeta("1234567890123456");
                 Cuenta cuenta = tc.consultar("1234567890123456"); 
                 System.out.println(cuenta.getSaldo());
-                
-                
             break;
+            
             case 2:
                 tc.cc.conectar();
                 tc.retirar(300,"1234567890123456");
                 tc.cc.desconectar();
             break;
+            
             case 3:
                 tc.cc.conectar();
                 tc.depositar(400, "1234567890123456");

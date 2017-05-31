@@ -6,8 +6,6 @@ public class CuentaHabiente extends Cuenta {
     public CuentaHabiente(int nip,String nCuenta) {
         super(nCuenta);
         this.nip = nip;
-        
-               
     }
     
     public CuentaHabiente(){
@@ -17,6 +15,5 @@ public class CuentaHabiente extends Cuenta {
     public int getNip(){
         return this.nip;
     }
-    
     
 }

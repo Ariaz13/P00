@@ -18,8 +18,8 @@ Cuenta cta = new Cuenta();
     public static void main(String[] args) {
         ProyectoBanco b = new ProyectoBanco();
         b.show();
-    
     }
+    
     void show(){
         conectarTDC();
         conectarTDD();
@@ -55,12 +55,10 @@ Cuenta cta = new Cuenta();
         if (tc.verificarTarjeta(cuenta) == true){
             conectarTDC();
             procesoTDC();
-        }
-        else if (td.verificarTarjeta(cuenta) == true){
+        }else if (td.verificarTarjeta(cuenta) == true){
             conectarTDD();
             procesoTDD();
-        }
-        else{
+        }else{
             System.out.println("No coincide la tarjeta");
         }   
     }
