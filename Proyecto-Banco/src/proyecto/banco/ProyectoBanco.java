@@ -6,14 +6,14 @@ import java.util.logging.Logger;
 import proyecto.banco.Model.*;
 
 public class ProyectoBanco {
-Conection c = new Conection();
-Cuenta cta = new Cuenta();
-        CuentaHabiente ch = new CuentaHabiente();
-        TDC tc = new TDC();
-        TDD td = new TDD();
-        Validación v = new Validación();
-        Movimientos mov = new Movimientos();
-        String cuenta;
+    Conection c = new Conection();
+    Cuenta cta = new Cuenta();
+    CuentaHabiente ch = new CuentaHabiente();
+    TDC tc = new TDC();
+    TDD td = new TDD();
+    Validación v = new Validación();
+    Movimientos mov = new Movimientos();
+    String cuenta;
         
     public static void main(String[] args) {
         ProyectoBanco b = new ProyectoBanco();
@@ -64,6 +64,7 @@ Cuenta cta = new Cuenta();
     }
     
     void procesoTDC(){
+    while (true){
         System.out.println("Elija que movimiento desea realizar  \n1.-Consulta \n2.-Retiro \n3.-Deposito \n4.-Cerrar sesión");
                 int m = new java.util.Scanner(System.in).nextInt();
                 switch (m){
@@ -103,11 +104,12 @@ Cuenta cta = new Cuenta();
                         desconectarTDC();
                         System.out.println("Regrese pronto.\n");
                         show();
-                    break;
-                    
+                    //break;
+                    return;
                     default: System.out.println("\"Operacion Erronea\"");
                     
-                } while(m == 4);
+                }// while(m == 4);
+    }
     }
     
     void procesoTDD(){
